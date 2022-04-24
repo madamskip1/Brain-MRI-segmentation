@@ -16,9 +16,9 @@ class UNet(nn.Module):
         self.conv_block_mid = UNet.__conv_block(512, 1024, 3)
         self.up_conv_mid = nn.ConvTranspose2d(in_channels=1024, out_channels=512, kernel_size=2, stride=2)
 
-        self.conv_block_r_4 = UNet.__up_conv_block(512, 3)
-        self.conv_block_r_3 = UNet.__up_conv_block(256, 3)
-        self.conv_block_r_2 = UNet.__up_conv_block(128, 3)
+        self.conv_block_r_4 = UNet.__up_conv_block(1024, 512, 3)
+        self.conv_block_r_3 = UNet.__up_conv_block(512, 256, 3)
+        self.conv_block_r_2 = UNet.__up_conv_block(256, 128, 3)
         self.conv_block_r_1 = UNet.__conv_block(128, 64, 3)
 
         self.crop_4 = CenterCrop((56, 56))
