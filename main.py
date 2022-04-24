@@ -7,7 +7,4 @@ if __name__ == "__main__":
         print(input.size())
         output = unet(input)
         print(output.size())
-        output_size = output.size()
-        assert output_size[1] == 1
-        assert output_size[2] == 388
-        assert output_size[3] == 388
+        assert output.size() == (1, 1, 388, 388)
