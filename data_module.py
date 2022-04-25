@@ -34,7 +34,7 @@ class MRIImagesDataModule(pl.LightningDataModule):
         val_size = int(train_size * self.val_train_ratio)
         train_size = train_size - val_size
 
-        self.train_dataset, self.val_dataset = random_split(self.image_folder, [train_size, test_size])
+        self.train_dataset, self.val_dataset = random_split(self.train_dataset, [train_size, val_size])
 
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, pin_memory=True, num_workers=4)
