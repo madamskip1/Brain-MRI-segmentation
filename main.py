@@ -1,5 +1,4 @@
-from unet import *
-from dataset_downloader import *
+from unet import UNet
 
 if __name__ == "__main__":
     unet = UNet(in_channels=1, out_channels=3, first_layer_out_channels=32)
@@ -8,5 +7,3 @@ if __name__ == "__main__":
     output = unet(input)
     print(output.size())
     assert output.size() == (1, 3, 388, 388)
-
-    download_dataset()
