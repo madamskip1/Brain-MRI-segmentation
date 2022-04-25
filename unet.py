@@ -38,29 +38,24 @@ class UNet(nn.Module):
         self.conv_out = nn.Conv2d(in_channels=expensive_block_out_channels, out_channels=self.out_channels,
                                   kernel_size=1)
 
-        self.crop_4 = CenterCrop((56, 56))
-        self.crop_3 = CenterCrop((104, 104))
-        self.crop_2 = CenterCrop((200, 200))
-        self.crop_1 = CenterCrop((392, 392))
-
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, x):
         # Contracting path
         x = self.conv_block_l_1(x)
-        encoded1 = self.crop_1(x)
+        encoded1 = torch.clone(x)
         x = self.maxpool(x)
 
         x = self.conv_block_l_2(x)
-        encoded2 = self.crop_2(x)
+        encoded2 = torch.clone(x)
         x = self.maxpool(x)
 
         x = self.conv_block_l_3(x)
-        encoded3 = self.crop_3(x)
+        encoded3 = torch.clone(x)
         x = self.maxpool(x)
 
         x = self.conv_block_l_4(x)
-        encoded4 = self.crop_4(x)
+        encoded4 = torch.clone(x)
         x = self.maxpool(x)
 
         # Middle
@@ -68,15 +63,19 @@ class UNet(nn.Module):
         x = self.up_conv_mid(x)
 
         # Expansive path
+        encoded4 = self.__crop_encoded(encoded4, x)
         x = torch.cat((x, encoded4), dim=1)
         x = self.conv_block_r_4(x)
 
+        encoded3 = self.__crop_encoded(encoded3, x)
         x = torch.cat((x, encoded3), dim=1)
         x = self.conv_block_r_3(x)
 
+        encoded2 = self.__crop_encoded(encoded2, x)
         x = torch.cat((x, encoded2), dim=1)
         x = self.conv_block_r_2(x)
 
+        encoded1 = self.__crop_encoded(encoded1, x)
         x = torch.cat((x, encoded1), dim=1)
         x = self.conv_block_r_1(x)
         x = self.conv_out(x)
@@ -99,3 +98,9 @@ class UNet(nn.Module):
             nn.ConvTranspose2d(in_channels=out_channels, out_channels=int(out_channels / 2), kernel_size=2, stride=2))
 
         return conv_block
+
+    @staticmethod
+    def __crop_encoded(encoded, decoded):
+        _, _, h, w = decoded.size()
+        cropFunc = CenterCrop((h, w))
+        return cropFunc(encoded)
