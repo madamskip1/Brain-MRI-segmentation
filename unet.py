@@ -63,24 +63,25 @@ class UNet(nn.Module):
         x = self.up_conv_mid(x)
 
         # Expansive path
-        encoded4 = self.__crop_encoded(encoded4, x)
+        encoded4 = UNet.__crop_encoded(encoded4, x)
         x = torch.cat((x, encoded4), dim=1)
         x = self.conv_block_r_4(x)
 
-        encoded3 = self.__crop_encoded(encoded3, x)
+        encoded3 = UNet.__crop_encoded(encoded3, x)
         x = torch.cat((x, encoded3), dim=1)
         x = self.conv_block_r_3(x)
 
-        encoded2 = self.__crop_encoded(encoded2, x)
+        encoded2 = UNet.__crop_encoded(encoded2, x)
         x = torch.cat((x, encoded2), dim=1)
         x = self.conv_block_r_2(x)
 
-        encoded1 = self.__crop_encoded(encoded1, x)
+        encoded1 = UNet.__crop_encoded(encoded1, x)
         x = torch.cat((x, encoded1), dim=1)
         x = self.conv_block_r_1(x)
         x = self.conv_out(x)
 
         return F.sigmoid(x)
+
 
     @staticmethod
     def __conv_block(in_channels, out_channels, kernel_size=3):
