@@ -15,21 +15,18 @@ class SegmentationModule(pl.LightningModule):
         return self.model(x)
 
     def training_step(self, batch, batch_idx, *args, **kwargs) -> STEP_OUTPUT:
-        x, y = batch
-        outputs = self(x)
+        outputs, y = self.calc_outputs(batch)
         loss = SegmentationModule.calc_loss(outputs, y)
         return {"loss": loss}
 
     def validation_step(self, batch, batch_idx, *args, **kwargs) -> Optional[STEP_OUTPUT]:
-        x, y = batch
-        outputs = self(x)
+        outputs, y = self.calc_outputs(batch)
         loss = SegmentationModule.calc_loss(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
         return {"val_loss": loss, "val_acc": acc}
 
     def test_step(self, batch, batch_idx, *args, **kwargs) -> Optional[STEP_OUTPUT]:
-        x, y = batch
-        outputs = self(x)
+        outputs, y = self.calc_outputs(batch)
         loss = SegmentationModule.calc_loss(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
         return {"test_loss": loss, "test_acc": acc}
@@ -48,4 +45,9 @@ class SegmentationModule(pl.LightningModule):
 
     @staticmethod
     def calc_acc(outputs, y):
-        return 0
+        return 0  # TODO dla segmentacji + przerobić na osobną klasę
+
+    def calc_outputs(self, batch):
+        x, y = batch
+        outputs = self(x)
+        return outputs, y
