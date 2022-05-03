@@ -50,19 +50,21 @@ class MRIImagesDataModule(pl.LightningDataModule):
 
     @staticmethod
     def __download_and_unzip_dataset():
+        print("Rozpoczęto przygotowywanie datasetu...")
         kaggle.api.authenticate()
         print("Pobieranie...")
         kaggle.api.dataset_download_files("mateuszbuda/lgg-mri-segmentation", path=os.getcwd(), quiet=False)
         print("Pobrano...")
 
-
         if not os.path.exists("dataset"):
             os.mkdir("dataset")
 
-        if not os.path.exists("dataset/brain_tumor_segmentation"):
-            os.mkdir("dataset/brain_tumor_segmentation")
-            os.mkdir("dataset/brain_tumor_segmentation/images")
-            os.mkdir("dataset/brain_tumor_segmentation/masks")
+        images_path = "dataset/images/"
+        masks_path = "dataset/masks/"
+
+        if not os.path.exists(images_path) and not os.path.exists(masks_path):
+            os.mkdir(images_path)
+            os.mkdir(masks_path)
 
             print("Rozpakowywanie...")
             with zipfile.ZipFile("lgg-mri-segmentation.zip", 'r') as zip_ref:
@@ -82,16 +84,34 @@ class MRIImagesDataModule(pl.LightningDataModule):
 
                 for image in images:
                     shutil.move("dataset/kaggle_3m/" + subdir + "/" + image,
-                                "dataset/brain_tumor_segmentation/images/" + image)
+                                images_path + image)
 
                 for mask in masks:
                     shutil.move("dataset/kaggle_3m/" + subdir + "/" + mask,
-                                "dataset/brain_tumor_segmentation/masks/" + mask)
+                                masks_path + mask)
             print("Posortowano...")
 
             print("Usuwanie tymczasowych folderów...")
             shutil.rmtree("dataset/kaggle_3m")
             shutil.rmtree("dataset/lgg-mri-segmentation")
             print("Usunięto...")
+
+            print("Standaryzowanie nazewnictwa zdjęć...")
+
+            images = os.listdir(images_path)
+
+            for i, image_name in enumerate(images):
+                dot_index = image_name.rfind('.')
+                mask_name = image_name[:dot_index] + "_mask" + image_name[dot_index:]
+                mask_name = masks_path + mask_name
+                image_name = images_path + image_name
+                new_image_name = images_path + "image_" + str(i) + ".tif"
+                new_mask_name = masks_path + "mask_" + str(i) + ".tif"
+                shutil.move(image_name, new_image_name)
+                shutil.move(mask_name, new_mask_name)
+
+            print("Ustandaryzowano...")
         else:
             print("Dataset już istnieje...")
+
+        print("Zakończono przygotowywanie datasetu...")
