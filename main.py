@@ -13,6 +13,6 @@ if __name__ == "__main__":
 
     data_module = MRIImagesDataModule()
     data_module.prepare_data()
-    #data_module.setup()
-   # train = data_module.train_dataloader()
-   # print(len(train.dataset))
+    data_module.setup()
+    train = data_module.train_dataloader()
+    print(len(train.dataset))

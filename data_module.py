@@ -8,7 +8,8 @@ import pytorch_lightning as pl
 import tqdm
 from pytorch_lightning.utilities.types import TRAIN_DATALOADERS, EVAL_DATALOADERS
 from torch.utils.data import DataLoader, random_split
-from torchvision.datasets import ImageFolder
+
+from BrainTumorDataset import BrainTumorDataset
 
 
 class MRIImagesDataModule(pl.LightningDataModule):
@@ -22,21 +23,21 @@ class MRIImagesDataModule(pl.LightningDataModule):
         self.train_test_ratio = train_test_ratio
         self.val_train_ratio = val_size
 
+        self.IMAGES_PATH = "dataset/images/"
+        self.MASKS_PATH = "dataset/masks/"
+
     def prepare_data(self) -> None:
         MRIImagesDataModule.__download_and_unzip_dataset()
 
     def setup(self, stage: Optional[str] = None) -> None:
-        self.image_folder = ImageFolder("dataset/brain_tumor_segmentation")
-        print(self.image_folder.classes)
-        print(len(self.image_folder.classes))
-        train_size = int(len(self.image_folder) * self.train_test_ratio)
-        test_size = len(self.image_folder) - train_size
+        dataset = BrainTumorDataset(self.IMAGES_PATH, self.MASKS_PATH)
 
-        self.train_dataset, self.test_dataset = random_split(self.image_folder, [train_size, test_size])
+        train_size = int(len(dataset) * self.train_test_ratio)
+        test_size = len(dataset) - train_size
+        self.train_dataset, self.test_dataset = random_split(dataset, [train_size, test_size])
 
         val_size = int(train_size * self.val_train_ratio)
         train_size = train_size - val_size
-
         self.train_dataset, self.val_dataset = random_split(self.train_dataset, [train_size, val_size])
 
     def train_dataloader(self) -> TRAIN_DATALOADERS:
