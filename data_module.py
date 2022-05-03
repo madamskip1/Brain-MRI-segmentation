@@ -1,10 +1,11 @@
 import os
+import shutil
+import zipfile
 from typing import Optional
 
 import kaggle
-import zipfile
-import tqdm
 import pytorch_lightning as pl
+import tqdm
 from pytorch_lightning.utilities.types import TRAIN_DATALOADERS, EVAL_DATALOADERS
 from torch.utils.data import DataLoader, random_split
 from torchvision.datasets import ImageFolder
@@ -26,6 +27,8 @@ class MRIImagesDataModule(pl.LightningDataModule):
 
     def setup(self, stage: Optional[str] = None) -> None:
         self.image_folder = ImageFolder("dataset/brain_tumor_segmentation")
+        print(self.image_folder.classes)
+        print(len(self.image_folder.classes))
         train_size = int(len(self.image_folder) * self.train_test_ratio)
         test_size = len(self.image_folder) - train_size
 
@@ -52,19 +55,43 @@ class MRIImagesDataModule(pl.LightningDataModule):
         kaggle.api.dataset_download_files("mateuszbuda/lgg-mri-segmentation", path=os.getcwd(), quiet=False)
         print("Pobrano...")
 
-        print("Rozpakowywanie...")
+
         if not os.path.exists("dataset"):
             os.mkdir("dataset")
 
         if not os.path.exists("dataset/brain_tumor_segmentation"):
+            os.mkdir("dataset/brain_tumor_segmentation")
+            os.mkdir("dataset/brain_tumor_segmentation/images")
+            os.mkdir("dataset/brain_tumor_segmentation/masks")
+
+            print("Rozpakowywanie...")
             with zipfile.ZipFile("lgg-mri-segmentation.zip", 'r') as zip_ref:
                 for file in tqdm.tqdm(iterable=zip_ref.namelist(), total=len(zip_ref.namelist())):
                     zip_ref.extract(member=file, path="dataset")
-
-            os.rename("dataset/kaggle_3m", "dataset/brain_tumor_segmentation")
-            os.remove("dataset/lgg-mri-segmentation")
             print("Rozpakowano...")
 
-            # os.remove("lgg-mri-segmentation.zip")
+            print("Sortowanie...")
+            dataset_dirs = os.listdir("dataset/kaggle_3m")
+            dataset_dirs.remove("data.csv")
+            dataset_dirs.remove("README.md")
+
+            for subdir in dataset_dirs:
+                files_in_subdir = os.listdir("dataset/kaggle_3m/" + subdir)
+                images = list(filter(lambda file_name: "mask" not in file_name, files_in_subdir))
+                masks = list(filter(lambda file_name: "mask" in file_name, files_in_subdir))
+
+                for image in images:
+                    shutil.move("dataset/kaggle_3m/" + subdir + "/" + image,
+                                "dataset/brain_tumor_segmentation/images/" + image)
+
+                for mask in masks:
+                    shutil.move("dataset/kaggle_3m/" + subdir + "/" + mask,
+                                "dataset/brain_tumor_segmentation/masks/" + mask)
+            print("Posortowano...")
+
+            print("Usuwanie tymczasowych folderów...")
+            shutil.rmtree("dataset/kaggle_3m")
+            shutil.rmtree("dataset/lgg-mri-segmentation")
+            print("Usunięto...")
         else:
             print("Dataset już istnieje...")
