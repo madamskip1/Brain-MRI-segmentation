@@ -3,12 +3,12 @@ import os
 from torch.utils.data import Dataset
 from PIL import Image
 
+from BrainTumorDatasetDownloader import BrainTumorDatasetDownloader
+
 
 class BrainTumorDataset(Dataset):
-    def __init__(self, images_path, masks_path):
-        self.images_path = images_path
-        self.masks_path = masks_path
-        self.images_num = len(os.listdir(images_path))
+    def __init__(self):
+        self.images_num = len(os.listdir(BrainTumorDatasetDownloader.IMAGES_PATH))
         self.transform_image = None
         self.transform_mask = None
 
@@ -16,8 +16,8 @@ class BrainTumorDataset(Dataset):
         return self.images_num
 
     def __getitem__(self, index):
-        image_name = self.images_path + "image_" + index + ".tif"
-        mask_name = self.masks_path + "mask_" + index + ".tif"
+        image_name = BrainTumorDatasetDownloader.IMAGES_PATH + "image_" + index + ".tif"
+        mask_name = BrainTumorDatasetDownloader.MASKS_PATH + "mask_" + index + ".tif"
         image = Image.open(image_name)
         _, image, _ = image.split()
         mask = Image.open(mask_name)
