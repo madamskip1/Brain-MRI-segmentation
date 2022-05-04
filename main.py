@@ -1,7 +1,7 @@
 import torch
 
-from unet import UNet
 from data_module import MRIImagesDataModule
+from unet import UNet
 
 if __name__ == "__main__":
     unet = UNet(in_channels=1, out_channels=3, first_layer_out_channels=32)

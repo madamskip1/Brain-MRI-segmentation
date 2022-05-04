@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torchvision.transforms import CenterCrop
 
 
@@ -80,15 +79,16 @@ class UNet(nn.Module):
         x = self.conv_block_r_1(x)
         x = self.conv_out(x)
 
-        return F.sigmoid(x)
-
+        return torch.sigmoid(x)
 
     @staticmethod
     def __conv_block(in_channels, out_channels, kernel_size=3):
         return nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(),
             nn.Conv2d(in_channels=out_channels, out_channels=out_channels, kernel_size=kernel_size),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU()
         )
 
