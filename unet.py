@@ -107,5 +107,5 @@ class UNet(nn.Module):
     @staticmethod
     def __crop_encoded(encoded, decoded):
         _, _, h, w = decoded.size()
-        cropFunc = CenterCrop((h, w))
-        return cropFunc(encoded)
+        crop_func = CenterCrop((h, w))
+        return crop_func(encoded)

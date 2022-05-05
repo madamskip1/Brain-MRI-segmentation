@@ -9,7 +9,7 @@ from BrainTumorDatasetDownloader import BrainTumorDatasetDownloader
 
 
 class MRIImagesDataModule(pl.LightningDataModule):
-    def __init__(self, batch_size=64, train_test_ratio=0.9, val_size=0.1):
+    def __init__(self, batch_size=10, train_test_ratio=0.9, val_size=0.1):
         super().__init__()
         self.val_dataset = None
         self.train_dataset = None
@@ -35,10 +35,10 @@ class MRIImagesDataModule(pl.LightningDataModule):
         self.train_dataset, self.val_dataset = random_split(self.train_dataset, [train_size, val_size])
 
     def train_dataloader(self) -> TRAIN_DATALOADERS:
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, pin_memory=True, num_workers=4)
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, pin_memory=True, num_workers=1)
 
     def test_dataloader(self) -> EVAL_DATALOADERS:
-        return DataLoader(self.test_dataset, batch_size=self.batch_size, pin_memory=True, num_workers=4)
+        return DataLoader(self.test_dataset, batch_size=self.batch_size, pin_memory=True, num_workers=1)
 
     def val_dataloader(self) -> EVAL_DATALOADERS:
-        return DataLoader(self.val_dataset, batch_size=self.batch_size, pin_memory=True, num_workers=4)
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, pin_memory=True, num_workers=1)
