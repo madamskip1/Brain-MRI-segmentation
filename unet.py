@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as f
 from torchvision.transforms import CenterCrop
 
 
@@ -40,6 +41,7 @@ class UNet(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, x):
+        _, _, height, width = x.shape
         # Contracting path
         x = self.conv_block_l_1(x)
         encoded1 = torch.clone(x)
@@ -79,7 +81,9 @@ class UNet(nn.Module):
         x = self.conv_block_r_1(x)
         x = self.conv_out(x)
 
-        return torch.sigmoid(x)
+        x = torch.sigmoid(x)
+        x = nn.functional.interpolate(x, (height, width))
+        return x
 
     @staticmethod
     def __conv_block(in_channels, out_channels, kernel_size=3):
