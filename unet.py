@@ -5,6 +5,7 @@ from torchvision.transforms import CenterCrop
 
 
 class UNet(nn.Module):
+    MASK_TRUE_THRESHOLD = 0.5
 
     def __init__(self, in_channels=1, out_channels=1, first_layer_out_channels=64):
         super().__init__()
@@ -83,6 +84,12 @@ class UNet(nn.Module):
 
         x = torch.sigmoid(x)
         x = nn.functional.interpolate(x, (height, width))
+        return x
+
+    def predict(self, x):
+        x = torch.unsqueeze(x, dim=0)
+        x = self(x)
+        x = (x > UNet.MASK_TRUE_THRESHOLD) * 1
         return x
 
     @staticmethod

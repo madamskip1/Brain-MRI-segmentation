@@ -26,13 +26,13 @@ class SegmentationModule(pl.LightningModule):
         outputs, y = self.calc_outputs(batch)
         loss = self.loss_function(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
-        return loss
+        return loss, acc
 
     def test_step(self, batch, batch_idx, *args, **kwargs) -> Optional[STEP_OUTPUT]:
         outputs, y = self.calc_outputs(batch)
         loss = self.loss_function(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
-        return loss
+        return loss, acc
 
     def validation_epoch_end(self, outputs: Union[EPOCH_OUTPUT, List[EPOCH_OUTPUT]]) -> None:
         pass  # avg_loss = torch.stack([o["val_loss"] for o in outputs]).mean()
@@ -43,8 +43,15 @@ class SegmentationModule(pl.LightningModule):
         return optimizer
 
     @staticmethod
-    def calc_acc(outputs, y):
-        return 0  # TODO dla segmentacji + przerobić na osobną klasę
+    def calc_acc(outputs, targets, smooth=1.0):
+        __outputs = outputs.view(-1)
+        _targets = targets.view(-1)
+
+        intersection = (__outputs * _targets).sum()
+        total = (__outputs + _targets).sum()
+        union = total - intersection
+        IoU = (intersection + smooth) / (union + smooth)
+        return IoU
 
     def calc_outputs(self, batch):
         x, y = batch

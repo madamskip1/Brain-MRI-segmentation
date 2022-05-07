@@ -10,9 +10,9 @@ class DiceLoss(nn.Module):
 
     @staticmethod
     def __dice_coef(outputs, targets, smooth):
-        outputs = outputs.view(-1)
-        targets = targets.view(-1)
-        intersection = (outputs * targets).sum()
-        dice = (2.0 * intersection + smooth) / (outputs.sum() + targets.sum() + smooth)
+        __outputs = outputs.view(-1)
+        __targets = targets.view(-1)
+        intersection = (__outputs * __targets).sum()
+        dice = (2.0 * intersection + smooth) / (__outputs.sum() + __targets.sum() + smooth)
 
         return dice
