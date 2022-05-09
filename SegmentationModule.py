@@ -8,10 +8,10 @@ from DiceLoss import DiceLoss
 
 
 class SegmentationModule(pl.LightningModule):
-    def __init__(self, model):
+    def __init__(self, model, learning_rate=1e-3):
         super().__init__()
         self.model = model
-        self.learning_rate = 1e-3
+        self.learning_rate = learning_rate
         self.loss_function = DiceLoss()
 
     def forward(self, x, *args, **kwargs) -> Any:
@@ -26,13 +26,13 @@ class SegmentationModule(pl.LightningModule):
         outputs, y = self.calc_outputs(batch)
         loss = self.loss_function(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
-        return loss, acc
+        return {"val_loss": loss, "vall_acc": acc}
 
     def test_step(self, batch, batch_idx, *args, **kwargs) -> Optional[STEP_OUTPUT]:
         outputs, y = self.calc_outputs(batch)
         loss = self.loss_function(outputs, y)
         acc = SegmentationModule.calc_acc(outputs, y)
-        return loss, acc
+        return {"test_loss": loss, "test_acc": acc}
 
     def validation_epoch_end(self, outputs: Union[EPOCH_OUTPUT, List[EPOCH_OUTPUT]]) -> None:
         pass  # avg_loss = torch.stack([o["val_loss"] for o in outputs]).mean()

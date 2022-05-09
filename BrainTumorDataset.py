@@ -27,9 +27,18 @@ class BrainTumorDataset(Dataset):
             image_std = BrainTumorDataset.IMAGE_MEAN[BrainTumorDataset.IMAGE_CHANNEL]
 
         self.transform_image = transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize(mean=image_mean, std=image_std)])
+            [
+                transforms.ToTensor(),
+                transforms.Normalize(mean=image_mean, std=image_std)
+            ]
+        )
 
-        self.transform_mask = transforms.ToTensor()
+        self.transform_mask = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize(mean=BrainTumorDataset.MASK_MEAN, std=BrainTumorDataset.MASK_STD)
+            ]
+        )
 
     def __len__(self):
         return self.images_num
@@ -46,7 +55,7 @@ class BrainTumorDataset(Dataset):
 
         if self.transform_image:
             image = self.transform_image(image)
-        if self.transform_mask is not None:
+        if self.transform_mask:
             mask = self.transform_mask(mask)
 
         return image, mask

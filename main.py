@@ -1,10 +1,9 @@
 import pytorch_lightning as pl
 import torch
 
-from BrainTumorDataset import BrainTumorDataset
 from DiceLoss import DiceLoss
+from MRIImagesDataModule import MRIImagesDataModule
 from SegmentationModule import SegmentationModule
-from data_module import MRIImagesDataModule
 from unet import UNet
 
 if __name__ == "__main__":

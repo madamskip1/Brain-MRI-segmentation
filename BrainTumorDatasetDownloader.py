@@ -21,8 +21,8 @@ class BrainTumorDatasetDownloader:
         if not os.path.exists(BrainTumorDatasetDownloader.DATASET_PATH):
             os.mkdir(BrainTumorDatasetDownloader.DATASET_PATH)
 
-        if not os.path.exists(BrainTumorDatasetDownloader.IMAGES_PATH) and not os.path.exists(
-                BrainTumorDatasetDownloader.MASKS_PATH):
+        if not os.path.exists(BrainTumorDatasetDownloader.IMAGES_PATH) \
+                and not os.path.exists(BrainTumorDatasetDownloader.MASKS_PATH):
             os.mkdir(BrainTumorDatasetDownloader.IMAGES_PATH)
             os.mkdir(BrainTumorDatasetDownloader.MASKS_PATH)
 
@@ -67,6 +67,7 @@ class BrainTumorDatasetDownloader:
             for mask in masks:
                 shutil.move("dataset/kaggle_3m/" + subdir + "/" + mask,
                             BrainTumorDatasetDownloader.MASKS_PATH + mask)
+
         print("Posortowano...")
 
     def __remove_temps(self):
