@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 class BrainTumorDatasetDownloader:
-    DATASET_PATH = "dataset/"
+    DATASET_PATH = "../../../../dataset/"
     IMAGES_PATH = DATASET_PATH + "images/"
     MASKS_PATH = DATASET_PATH + "masks/"
 
@@ -15,9 +15,6 @@ class BrainTumorDatasetDownloader:
         pass
 
     def prepare_dataset(self):
-        print("Rozpoczęto przygotowywanie datasetu...")
-        self.__download()
-
         if not os.path.exists(BrainTumorDatasetDownloader.DATASET_PATH):
             os.mkdir(BrainTumorDatasetDownloader.DATASET_PATH)
 
@@ -26,6 +23,8 @@ class BrainTumorDatasetDownloader:
             os.mkdir(BrainTumorDatasetDownloader.IMAGES_PATH)
             os.mkdir(BrainTumorDatasetDownloader.MASKS_PATH)
 
+            print("Rozpoczęto przygotowywanie datasetu...")
+            self.__download()
             self.__unzip()
             self.__sort_dataset()
             self.__remove_temps()
