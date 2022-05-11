@@ -1,17 +1,17 @@
 from typing import Optional
 
+import hydra
 import pytorch_lightning as pl
 from pytorch_lightning.utilities.types import TRAIN_DATALOADERS, EVAL_DATALOADERS
 from torch import randperm
 from torch.utils.data import DataLoader, random_split, Subset
 
-from BrainTumorDataset import BrainTumorDataset
-from BrainTumorDatasetDownloader import BrainTumorDatasetDownloader
-
 
 class MRIImagesDataModule(pl.LightningDataModule):
-    def __init__(self, batch_size=10, train_test_ratio=0.9, val_size=0.1, num_workers=4):
+    def __init__(self, dataset, dataset_downloader, batch_size=10, train_test_ratio=0.9, val_size=0.1, num_workers=4, **kwargs):
         super().__init__()
+        self.dataset = dataset
+        self.dataset_downloader = dataset_downloader
         self.batch_size = batch_size
         self.train_test_ratio = train_test_ratio
         self.val_train_ratio = val_size
@@ -21,16 +21,14 @@ class MRIImagesDataModule(pl.LightningDataModule):
         self.test_dataset = None
 
     def prepare_data(self) -> None:
-        dataset_downloader = BrainTumorDatasetDownloader()
-        dataset_downloader.prepare_dataset()
+        self.dataset_downloader.prepare_dataset()
 
     def setup(self, stage: Optional[str] = None) -> None:
-        dataset = BrainTumorDataset()
         # indices = randperm(len(dataset))[:100]
         # dataset_small = Subset(dataset, indices)
-        train_size = int(len(dataset) * self.train_test_ratio)
-        test_size = len(dataset) - train_size
-        self.train_dataset, self.test_dataset = random_split(dataset, [train_size, test_size])
+        train_size = int(len(self.dataset) * self.train_test_ratio)
+        test_size = len(self.dataset) - train_size
+        self.train_dataset, self.test_dataset = random_split(self.dataset, [train_size, test_size])
 
         val_size = int(train_size * self.val_train_ratio)
         train_size = train_size - val_size

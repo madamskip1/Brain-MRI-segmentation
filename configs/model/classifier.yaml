@@ -1,6 +1,6 @@
 name: LitClassifier
 
-_target_: project.lightning_modules.classifier.LitClassifier
+_target_: project.models.classifier.LitClassifier
 hidden_dim: 128
 
 defaults:  

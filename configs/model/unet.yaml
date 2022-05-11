@@ -1,6 +1,0 @@
-name: UNet
-
-_target_: project.lightning_modules.models.UNet
-in_channels: 1
-out_channels: 1
-first_layer_out_channels: 32

@@ -1,19 +1,17 @@
 from typing import Any, Optional, Union, List
 
-import hydra
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.utilities.types import STEP_OUTPUT, EPOCH_OUTPUT
 
 from DiceLoss import DiceLoss
 
-
 class SegmentationModule(pl.LightningModule):
-    def __init__(self, model, **kwargs):
+    def __init__(self, model, learning_rate, **kwargs):
         super().__init__()
         self.save_hyperparameters(ignore=['model'])
         self.model = model
-        #self.optimizer = optim
+        self.learning_rate = learning_rate
         self.loss_function = DiceLoss()
 
     def forward(self, x, *args, **kwargs) -> Any:
@@ -43,16 +41,11 @@ class SegmentationModule(pl.LightningModule):
 
     def validation_epoch_end(self, outputs: Union[EPOCH_OUTPUT, List[EPOCH_OUTPUT]]) -> None:
         self.log("average_validation_loss", torch.stack([o["validation_loss"] for o in outputs]).mean())
-        pass  # avg_loss = torch.stack([o["val_loss"] for o in outputs]).mean()
 
     def configure_optimizers(self):
-        self.learning_rate = 1e-3
         optimizer = torch.optim.Adam(self.parameters(),
                                      lr=self.learning_rate)  # TODO Sprwadzić czy Adam do segmentacji czy inny
         return optimizer
-    
-    # def configure_optimizers(self):
-    #     return hydra.utils.instantiate(self.hparams.optim, params=self.parameters())
 
     @staticmethod
     def calc_acc(outputs, targets, smooth=1.0):

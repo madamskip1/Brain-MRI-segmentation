@@ -1,17 +1,16 @@
 hydra: 
   run:
     # Configure output dir of each experiment programmatically from the arguments
-    # Example "outputs/mnist/classifier/baseline/2021-03-10-141516"
-    dir: outputs/${network.name}/${experiment}/${now:%Y-%m-%d_%H%M%S}
+    # Example "outputs/classifier/baseline/2021-03-10-141516"
+    dir: outputs/${model.name}/${experiment}/${now:%Y-%m-%d_%H%M%S}
 
 # Global configurations shared between different modules
 experiment: baseline
 
 # Composing nested config with default
 defaults:
-  #- data: mnist.yaml
-  - model: unet.yaml
-  - network: segmentation_module.yaml
+  - data: mri.yaml
+  - model: segmentation_module.yaml
   - callbacks: default.yaml
   - _self_
 
