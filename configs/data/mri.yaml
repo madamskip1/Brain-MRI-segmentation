@@ -1,0 +1,33 @@
+name: mri
+
+_target_: project.data_modules.mri_images_data_module.MRIImagesDataModule
+dataset_path: "../../../../dataset/"
+images_path: "../../../../dataset/images/"
+masks_path: "../../../../dataset/masks/"
+
+dataset:
+  _target_: project.data_modules.components.brain_tumor_dataset.BrainTumorDataset
+  images_path: "../../../../dataset/images/"
+  masks_path: "../../../../dataset/masks/"
+  mask_mean: 0.0102
+  mask_std: 0.1005
+  image_mean:
+    - 0.0913
+    - 0.0828
+    - 0.0869
+  image_std:
+    - 0.1349
+    - 0.1234
+    - 0.1288
+  image_channel: 1  # -1 to wszystkie
+
+dataset_downloader:
+  _target_: project.data_modules.components.brain_tumor_dataset_downloader.BrainTumorDatasetDownloader
+  dataset_path: "../../../../dataset/"
+  images_path: "../../../../dataset/images/"
+  masks_path: "../../../../dataset/masks/"
+
+batch_size: 10
+train_test_ratio: 0.9
+val_size: 0.1
+num_workers: 4

@@ -7,25 +7,22 @@ from tqdm import tqdm
 
 
 class BrainTumorDatasetDownloader:
-    DATASET_PATH = "dataset/"
-    IMAGES_PATH = DATASET_PATH + "images/"
-    MASKS_PATH = DATASET_PATH + "masks/"
-
-    def __init__(self):
-        pass
+    def __init__(self, dataset_path, images_path, masks_path, **kwargs):
+        self.dataset_path = dataset_path
+        self.images_path = images_path
+        self.masks_path = masks_path
 
     def prepare_dataset(self):
-        print("Rozpoczęto przygotowywanie datasetu...")
-        self.__download()
+        if not os.path.exists(self.dataset_path):
+            os.mkdir(self.dataset_path)
 
-        if not os.path.exists(BrainTumorDatasetDownloader.DATASET_PATH):
-            os.mkdir(BrainTumorDatasetDownloader.DATASET_PATH)
+        if not os.path.exists(self.images_path) \
+                and not os.path.exists(self.masks_path):
+            os.mkdir(self.images_path)
+            os.mkdir(self.masks_path)
 
-        if not os.path.exists(BrainTumorDatasetDownloader.IMAGES_PATH) \
-                and not os.path.exists(BrainTumorDatasetDownloader.MASKS_PATH):
-            os.mkdir(BrainTumorDatasetDownloader.IMAGES_PATH)
-            os.mkdir(BrainTumorDatasetDownloader.MASKS_PATH)
-
+            print("Rozpoczęto przygotowywanie datasetu...")
+            self.__download()
             self.__unzip()
             self.__sort_dataset()
             self.__remove_temps()
@@ -62,11 +59,11 @@ class BrainTumorDatasetDownloader:
 
             for image in images:
                 shutil.move("dataset/kaggle_3m/" + subdir + "/" + image,
-                            BrainTumorDatasetDownloader.IMAGES_PATH + image)
+                            self.images_path + image)
 
             for mask in masks:
                 shutil.move("dataset/kaggle_3m/" + subdir + "/" + mask,
-                            BrainTumorDatasetDownloader.MASKS_PATH + mask)
+                            self.masks_path + mask)
 
         print("Posortowano...")
 
@@ -78,16 +75,16 @@ class BrainTumorDatasetDownloader:
 
     def __standardize_names(self):
         print("Standaryzowanie nazewnictwa zdjęć...")
-        images = os.listdir(BrainTumorDatasetDownloader.IMAGES_PATH)
+        images = os.listdir(self.images_path)
 
         # TODO dodać tqdm
         for i, image_name in enumerate(images):
             dot_index = image_name.rfind('.')
             mask_name = image_name[:dot_index] + "_mask" + image_name[dot_index:]
-            mask_name = BrainTumorDatasetDownloader.MASKS_PATH + mask_name
-            image_name = BrainTumorDatasetDownloader.IMAGES_PATH + image_name
-            new_image_name = BrainTumorDatasetDownloader.IMAGES_PATH + "image_" + str(i) + ".tif"
-            new_mask_name = BrainTumorDatasetDownloader.MASKS_PATH + "mask_" + str(i) + ".tif"
+            mask_name = self.masks_path + mask_name
+            image_name = self.images_path + image_name
+            new_image_name = self.images_path + "image_" + str(i) + ".tif"
+            new_mask_name = self.masks_path + "mask_" + str(i) + ".tif"
             shutil.move(image_name, new_image_name)
             shutil.move(mask_name, new_mask_name)
         print("Ustandaryzowano...")

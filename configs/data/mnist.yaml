@@ -1,0 +1,9 @@
+name: mnist
+
+_target_: project.data_modules.mnist.MNISTDataModule
+data_dir: ${hydra:runtime.cwd}/datasets/MNIST/
+batch_size: 10
+num_workers: 4
+
+input_dim: 784
+output_dim: 10

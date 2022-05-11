@@ -1,5 +1,8 @@
 *.zip
 dataset/
+datasets/
+outputs/
+wandb/
 
 # pycharm
 .idea/

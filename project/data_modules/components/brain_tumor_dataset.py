@@ -1,42 +1,36 @@
 import os
 
-from torch.utils.data import Dataset
 from PIL import Image
 from torchvision import transforms
-
-from BrainTumorDatasetDownloader import BrainTumorDatasetDownloader
-
+from torch.utils.data import Dataset
 
 class BrainTumorDataset(Dataset):
-    MASK_MEAN = 0.0102
-    MASK_STD = 0.1005
-    IMAGE_MEAN = [0.0913, 0.0828, 0.0869]
-    IMAGE_STD = [0.1349, 0.1234, 0.1288]
-    IMAGE_CHANNEL = 1  # -1 to wszystkie
-
-    def __init__(self, images_path=BrainTumorDatasetDownloader.IMAGES_PATH,
-                 masks_path=BrainTumorDatasetDownloader.MASKS_PATH):
+    def __init__(self, images_path, masks_path, mask_mean, mask_std, image_mean, image_std, image_channel, **kwargs):
         self.images_path = images_path
         self.masks_path = masks_path
         self.images_num = len(os.listdir(self.images_path))
 
-        image_mean = BrainTumorDataset.IMAGE_MEAN
-        image_std = BrainTumorDataset.IMAGE_STD
-        if BrainTumorDataset.IMAGE_CHANNEL != -1:
-            image_mean = BrainTumorDataset.IMAGE_MEAN[BrainTumorDataset.IMAGE_CHANNEL]
-            image_std = BrainTumorDataset.IMAGE_MEAN[BrainTumorDataset.IMAGE_CHANNEL]
+        self.mask_mean = mask_mean
+        self.mask_std = mask_std
+        self.image_mean = image_mean
+        self.image_std = image_std
+        self.image_channel = image_channel
+
+        if self.image_channel != -1:
+            self.image_mean = image_mean[self.image_channel]
+            self.image_std = image_std[self.image_channel]
 
         self.transform_image = transforms.Compose(
             [
                 transforms.ToTensor(),
-                transforms.Normalize(mean=image_mean, std=image_std)
+                transforms.Normalize(mean=self.image_mean, std=self.image_std)
             ]
         )
 
         self.transform_mask = transforms.Compose(
             [
                 transforms.ToTensor(),
-                transforms.Normalize(mean=BrainTumorDataset.MASK_MEAN, std=BrainTumorDataset.MASK_STD)
+                transforms.Normalize(mean=self.mask_mean, std=self.mask_std)
             ]
         )
 
@@ -49,9 +43,9 @@ class BrainTumorDataset(Dataset):
         image = Image.open(image_name)
         mask = Image.open(mask_name)
 
-        if BrainTumorDataset.IMAGE_CHANNEL != -1:
+        if self.image_channel != -1:
             image_channels = image.split()
-            image = image_channels[BrainTumorDataset.IMAGE_CHANNEL]
+            image = image_channels[self.image_channel]
 
         if self.transform_image:
             image = self.transform_image(image)

@@ -1,0 +1,7 @@
+name: LitClassifier
+
+_target_: project.models.classifier.LitClassifier
+hidden_dim: 128
+
+defaults:  
+  - /optim/adam
