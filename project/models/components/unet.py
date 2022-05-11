@@ -92,7 +92,8 @@ class UNet(nn.Module):
         return x
 
     def predict(self, x):
-        x = torch.unsqueeze(x, dim=0)
+        if len(x.shape) < 4:
+            x = torch.unsqueeze(x, dim=0)
         x = self(x)
         x = (x > UNet.MASK_TRUE_THRESHOLD) * 1
         return x

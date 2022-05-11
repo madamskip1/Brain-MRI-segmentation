@@ -46,6 +46,9 @@ class SegmentationModule(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(),
                                      lr=self.learning_rate)  # TODO Sprwadzić czy Adam do segmentacji czy inny
         return optimizer
+    
+    def predict(self, inputs):
+        return self.model.predict(inputs)
 
     @staticmethod
     def calc_acc(outputs, targets, smooth=1.0):
