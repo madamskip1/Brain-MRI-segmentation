@@ -8,7 +8,6 @@ class BrainTumorDataset(Dataset):
     def __init__(self, images_path, masks_path, mask_mean, mask_std, image_mean, image_std, image_channel, **kwargs):
         self.images_path = images_path
         self.masks_path = masks_path
-        self.images_num = len(os.listdir(self.images_path))
 
         self.mask_mean = mask_mean
         self.mask_std = mask_std
@@ -35,7 +34,7 @@ class BrainTumorDataset(Dataset):
         )
 
     def __len__(self):
-        return self.images_num
+        return len(os.listdir(self.images_path))
 
     def __getitem__(self, index):
         image_name = self.images_path + "image_" + str(index) + ".tif"
