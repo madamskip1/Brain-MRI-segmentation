@@ -5,7 +5,7 @@ from torchvision.transforms import CenterCrop
 
 
 class UNet(nn.Module):
-    def __init__(self, in_channels=1, out_channels=1, first_layer_out_channels=64, mask_true_threshold = 0.5):
+    def __init__(self, in_channels=1, out_channels=1, first_layer_out_channels=64, mask_true_threshold=0.5):
         super().__init__()
 
         self.in_channels = in_channels
@@ -42,8 +42,6 @@ class UNet(nn.Module):
 
         self.conv_out = nn.Conv2d(in_channels=expensive_block_out_channels, out_channels=self.out_channels,
                                   kernel_size=1)
-
-        self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, x):
         _, _, height, width = x.shape

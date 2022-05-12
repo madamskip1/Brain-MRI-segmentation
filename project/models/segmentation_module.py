@@ -6,6 +6,7 @@ from pytorch_lightning.utilities.types import STEP_OUTPUT, EPOCH_OUTPUT
 
 from DiceLoss import DiceLoss
 
+
 class SegmentationModule(pl.LightningModule):
     def __init__(self, model, learning_rate, **kwargs):
         super().__init__()
@@ -46,7 +47,7 @@ class SegmentationModule(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(),
                                      lr=self.learning_rate)  # TODO Sprwadzić czy Adam do segmentacji czy inny
         return optimizer
-    
+
     def predict(self, inputs):
         return self.model.predict(inputs)
 
