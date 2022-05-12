@@ -4,6 +4,7 @@ from PIL import Image
 from torchvision import transforms
 from torch.utils.data import Dataset
 
+
 class BrainTumorDataset(Dataset):
     def __init__(self, images_path, masks_path, mask_mean, mask_std, image_mean, image_std, image_channel, **kwargs):
         self.images_path = images_path
@@ -29,7 +30,6 @@ class BrainTumorDataset(Dataset):
         self.transform_mask = transforms.Compose(
             [
                 transforms.ToTensor(),
-                transforms.Normalize(mean=self.mask_mean, std=self.mask_std)
             ]
         )
 
