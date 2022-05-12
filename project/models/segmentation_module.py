@@ -44,6 +44,7 @@ class SegmentationModule(pl.LightningModule):
         self.log("average_validation_loss", torch.stack([o["validation_loss"] for o in outputs]).mean())
 
     def configure_optimizers(self):
+        print(self.parameters())
         optimizer = torch.optim.Adam(self.parameters(),
                                      lr=self.learning_rate)  # TODO Sprwadzić czy Adam do segmentacji czy inny
         return optimizer
@@ -53,7 +54,8 @@ class SegmentationModule(pl.LightningModule):
 
     @staticmethod
     def calc_acc(outputs, targets, smooth=1.0):
-        __outputs = outputs.view(-1)
+        __outputs = (outputs > 0.5) * 1.0
+        __outputs = __outputs.view(-1)
         _targets = targets.view(-1)
 
         intersection = (__outputs * _targets).sum()
