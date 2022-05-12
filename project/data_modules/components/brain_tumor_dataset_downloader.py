@@ -13,6 +13,12 @@ class BrainTumorDatasetDownloader:
         self.masks_path = masks_path
 
     def prepare_dataset(self):
+        print("Rozpoczęto przygotowywanie datasetu...")
+        #self.__download()
+        #self.__unzip()
+        #self.__sort_dataset()
+        #self.__remove_temps()
+        #self.__standardize_names()
         if not os.path.exists(self.dataset_path):
             os.mkdir(self.dataset_path)
 
@@ -47,30 +53,30 @@ class BrainTumorDatasetDownloader:
 
     def __sort_dataset(self):
         print("Sortowanie...")
-        dataset_dirs = os.listdir(f"{self.dataset_path}/dataset/kaggle_3m")
-        dataset_dirs.remove(f"{self.dataset_path}/data.csv")
-        dataset_dirs.remove(f"{self.dataset_path}/README.md")
+        dataset_dirs = os.listdir(f"{self.dataset_path}/kaggle_3m")
+        dataset_dirs.remove(f"data.csv")
+        dataset_dirs.remove(f"README.md")
 
         # TODO dodać tqdm
         for subdir in dataset_dirs:
-            files_in_subdir = os.listdir(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir)
+            files_in_subdir = os.listdir(f"{self.dataset_path}/kaggle_3m/{subdir}")
             images = list(filter(lambda file_name: "mask" not in file_name, files_in_subdir))
             masks = list(filter(lambda file_name: "mask" in file_name, files_in_subdir))
 
             for image in images:
-                shutil.move(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir + "/" + image,
-                            self.images_path + image)
+                shutil.move(f"{self.dataset_path}/kaggle_3m/{subdir}/{image}",
+                            f"{self.images_path}/{image}")
 
             for mask in masks:
-                shutil.move(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir + "/" + mask,
-                            self.masks_path + mask)
+                shutil.move(f"{self.dataset_path}/kaggle_3m/{subdir}/{mask}",
+                            f"{self.masks_path}/{mask}")
 
         print("Posortowano...")
 
     def __remove_temps(self):
         print("Usuwanie tymczasowych folderów...")
-        shutil.rmtree(f"{self.dataset_path}/dataset/kaggle_3m")
-        shutil.rmtree(f"{self.dataset_path}/dataset/lgg-mri-segmentation")
+        shutil.rmtree(f"{self.dataset_path}/kaggle_3m")
+        shutil.rmtree(f"{self.dataset_path}/lgg-mri-segmentation")
         print("Usunięto...")
 
     def __standardize_names(self):
@@ -80,11 +86,10 @@ class BrainTumorDatasetDownloader:
         # TODO dodać tqdm
         for i, image_name in enumerate(images):
             dot_index = image_name.rfind('.')
-            mask_name = image_name[:dot_index] + "_mask" + image_name[dot_index:]
-            mask_name = self.masks_path + mask_name
-            image_name = self.images_path + image_name
-            new_image_name = self.images_path + "image_" + str(i) + ".tif"
-            new_mask_name = self.masks_path + "mask_" + str(i) + ".tif"
+            mask_name = f"{self.masks_path}/{image_name[:dot_index]}_mask{image_name[dot_index:]}"
+            image_name = f"{self.images_path}/{image_name}"
+            new_image_name = f"{self.images_path}/image_{i}.tif"
+            new_mask_name = f"{self.masks_path}/mask_{i}.tif"
             shutil.move(image_name, new_image_name)
             shutil.move(mask_name, new_mask_name)
         print("Ustandaryzowano...")

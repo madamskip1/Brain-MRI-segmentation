@@ -37,8 +37,8 @@ class BrainTumorDataset(Dataset):
         return len(os.listdir(self.images_path))
 
     def __getitem__(self, index):
-        image_name = self.images_path + "image_" + str(index) + ".tif"
-        mask_name = self.masks_path + "mask_" + str(index) + ".tif"
+        image_name = f"{self.images_path}/image_{index}.tif"
+        mask_name = f"{self.masks_path}/mask_{index}.tif"
         image = Image.open(image_name)
         mask = Image.open(mask_name)
 

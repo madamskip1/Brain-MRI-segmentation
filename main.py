@@ -27,7 +27,7 @@ def main(config: DictConfig) -> None:
         ImagePredictionLogger(val_samples)
     ]
     wandb_logger = WandbLogger(project="test-project-mri")
-
+    
     trainer = pl.Trainer(
         **OmegaConf.to_container(config.trainer),
         logger=wandb_logger,
