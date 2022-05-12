@@ -3,6 +3,12 @@ dataset/
 datasets/
 outputs/
 wandb/
+checkpoint-04-0.78.ckpt
+
+# config files to ignore
+configs/data/mnist.yaml
+configs/model/classifier.yaml
+configs/optim/*
 
 # pycharm
 .idea/

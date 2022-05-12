@@ -35,42 +35,42 @@ class BrainTumorDatasetDownloader:
     def __download(self):
         kaggle.api.authenticate()
         print("Pobieranie...")
-        kaggle.api.dataset_download_files("mateuszbuda/lgg-mri-segmentation", path=os.getcwd(), quiet=False)
+        kaggle.api.dataset_download_files("mateuszbuda/lgg-mri-segmentation", path=self.dataset_path, quiet=False)
         print("Pobrano...")
 
     def __unzip(self):
         print("Rozpakowywanie...")
-        with zipfile.ZipFile("lgg-mri-segmentation.zip", 'r') as zip_ref:
+        with zipfile.ZipFile(f"{self.dataset_path}/lgg-mri-segmentation.zip", 'r') as zip_ref:
             for file in tqdm(iterable=zip_ref.namelist(), total=len(zip_ref.namelist())):
-                zip_ref.extract(member=file, path="dataset")
+                zip_ref.extract(member=file, path=self.dataset_path)
         print("Rozpakowano...")
 
     def __sort_dataset(self):
         print("Sortowanie...")
-        dataset_dirs = os.listdir("dataset/kaggle_3m")
-        dataset_dirs.remove("data.csv")
-        dataset_dirs.remove("README.md")
+        dataset_dirs = os.listdir(f"{self.dataset_path}/dataset/kaggle_3m")
+        dataset_dirs.remove(f"{self.dataset_path}/data.csv")
+        dataset_dirs.remove(f"{self.dataset_path}/README.md")
 
         # TODO dodać tqdm
         for subdir in dataset_dirs:
-            files_in_subdir = os.listdir("dataset/kaggle_3m/" + subdir)
+            files_in_subdir = os.listdir(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir)
             images = list(filter(lambda file_name: "mask" not in file_name, files_in_subdir))
             masks = list(filter(lambda file_name: "mask" in file_name, files_in_subdir))
 
             for image in images:
-                shutil.move("dataset/kaggle_3m/" + subdir + "/" + image,
+                shutil.move(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir + "/" + image,
                             self.images_path + image)
 
             for mask in masks:
-                shutil.move("dataset/kaggle_3m/" + subdir + "/" + mask,
+                shutil.move(f"{self.dataset_path}/dataset/kaggle_3m/" + subdir + "/" + mask,
                             self.masks_path + mask)
 
         print("Posortowano...")
 
     def __remove_temps(self):
         print("Usuwanie tymczasowych folderów...")
-        shutil.rmtree("dataset/kaggle_3m")
-        shutil.rmtree("dataset/lgg-mri-segmentation")
+        shutil.rmtree(f"{self.dataset_path}/dataset/kaggle_3m")
+        shutil.rmtree(f"{self.dataset_path}/dataset/lgg-mri-segmentation")
         print("Usunięto...")
 
     def __standardize_names(self):

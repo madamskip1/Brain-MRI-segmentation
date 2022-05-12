@@ -5,11 +5,16 @@ from omegaconf import DictConfig, OmegaConf
 import wandb
 
 from project.image_prediction_logger import ImagePredictionLogger
+from project.models.segmentation_module import SegmentationModule
 
 @hydra.main(config_path="configs", config_name="defaults")
 def main(config: DictConfig) -> None:
 
-    model = hydra.utils.instantiate(config.model)
+    if config.checkpoint_path:
+        unet = hydra.utils.instantiate(config.segmentation_module_model)
+        model = SegmentationModule.load_from_checkpoint(checkpoint_path=config.checkpoint_path, model=unet)
+    else:
+        model = hydra.utils.instantiate(config.model)
 
     data_module = hydra.utils.instantiate(config.data)
     data_module.prepare_data()

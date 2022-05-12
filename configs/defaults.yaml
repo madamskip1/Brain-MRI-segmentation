@@ -2,16 +2,30 @@ hydra:
   run:
     # Configure output dir of each experiment programmatically from the arguments
     # Example "outputs/classifier/baseline/2021-03-10-141516"
-    dir: outputs/${model.name}/${experiment}/${now:%Y-%m-%d_%H%M%S}
+    dir: "outputs/${model.name}/${experiment}/${now:%Y-%m-%d_%H%M%S}"
 
 # Global configurations shared between different modules
-experiment: baseline
+experiment: "baseline"
+
+# path to original working directory
+# hydra hijacks working directory by changing it to the new log directory
+# https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
+original_work_dir: "${hydra:runtime.cwd}"
+
+# path to dataset
+dataset_path: "${original_work_dir}/dataset"
+images_path: "${dataset_path}/images"
+masks_path: "${dataset_path}/masks"
+
+# Example path: "outputs/segmentation_module/baseline/2022-05-10_231130/<checkpoint_filename>"
+checkpoint_path: null #"${original_work_dir}/checkpoint-04-0.78.ckpt"
 
 # Composing nested config with default
 defaults:
   - data: mri.yaml
   - model: segmentation_module.yaml
   - callbacks: default.yaml
+  - segmentation_module_model: unet.yaml
   - _self_
 
 # Pytorch lightning trainer's argument

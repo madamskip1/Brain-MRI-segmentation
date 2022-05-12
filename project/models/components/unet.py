@@ -5,14 +5,13 @@ from torchvision.transforms import CenterCrop
 
 
 class UNet(nn.Module):
-    MASK_TRUE_THRESHOLD = 0.5
-
-    def __init__(self, in_channels=1, out_channels=1, first_layer_out_channels=64):
+    def __init__(self, in_channels=1, out_channels=1, first_layer_out_channels=64, mask_true_threshold = 0.5):
         super().__init__()
 
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.first_layer_out_channels = first_layer_out_channels
+        self.mask_true_threshold = mask_true_threshold
 
         layer_out_channels = first_layer_out_channels
 
@@ -95,7 +94,7 @@ class UNet(nn.Module):
         if len(x.shape) < 4:
             x = torch.unsqueeze(x, dim=0)
         x = self(x)
-        x = (x > UNet.MASK_TRUE_THRESHOLD) * 1
+        x = (x > self.mask_true_threshold) * 1
         return x
 
     @staticmethod
