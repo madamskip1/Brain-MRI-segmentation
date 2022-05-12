@@ -5,10 +5,13 @@ outputs/
 wandb/
 checkpoint-04-0.78.ckpt
 
-# config files to ignore
+# dummy model files to ignore
 configs/data/mnist.yaml
 configs/model/classifier.yaml
 configs/optim/*
+project/data_modules/mnist.py
+project/models/classifier.py
+main_alpha.py
 
 # pycharm
 .idea/
