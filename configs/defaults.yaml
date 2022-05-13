@@ -24,12 +24,16 @@ checkpoint_path: null #"${original_work_dir}/checkpoint-04-0.78.ckpt"
 image_channel: -1  # -1 - all channels
 in_channels: 3
 
+# Model settings
+mask_true_threshold: 0.5
+
 # Composing nested config with default
 defaults:
   - data: mri.yaml
   - model: segmentation_module.yaml
   - callbacks: default.yaml
   - segmentation_module_model: unet.yaml
+  - loss: dice.yaml
   - _self_
 
 # Pytorch lightning trainer's argument

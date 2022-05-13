@@ -4,7 +4,7 @@ import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
 import wandb
 
-from project.image_prediction_logger import ImagePredictionLogger
+from project.utils.image_prediction_logger import ImagePredictionLogger
 from project.models.segmentation_module import SegmentationModule
 
 @hydra.main(config_path="configs", config_name="defaults")
@@ -12,7 +12,8 @@ def main(config: DictConfig) -> None:
 
     if config.checkpoint_path:
         unet = hydra.utils.instantiate(config.segmentation_module_model)
-        model = SegmentationModule.load_from_checkpoint(checkpoint_path=config.checkpoint_path, model=unet)
+        loss = hydra.utils.instantiate(config.loss)
+        model = SegmentationModule.load_from_checkpoint(checkpoint_path=config.checkpoint_path, model=unet, loss_function=loss)
     else:
         model = hydra.utils.instantiate(config.model)
 

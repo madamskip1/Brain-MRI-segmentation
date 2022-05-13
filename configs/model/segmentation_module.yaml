@@ -6,6 +6,9 @@ model:
   in_channels: ${in_channels}
   out_channels: 1
   first_layer_out_channels: 32
-  mask_true_threshold: 0.5
+  mask_true_threshold: ${mask_true_threshold}
+
+loss_function:
+  _target_: project.utils.dice_loss.DiceLoss
 
 learning_rate: 1e-3

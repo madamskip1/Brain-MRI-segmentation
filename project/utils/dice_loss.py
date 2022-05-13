@@ -1,6 +1,5 @@
 from torch import nn
 
-
 class DiceLoss(nn.Module):
     def __init__(self):
         super().__init__()
