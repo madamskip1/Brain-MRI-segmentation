@@ -1,5 +1,5 @@
 _target_: project.models.components.unet.UNet
-in_channels: 3
+in_channels: ${in_channels}
 out_channels: 1
 first_layer_out_channels: 32
 mask_true_threshold: 0.5

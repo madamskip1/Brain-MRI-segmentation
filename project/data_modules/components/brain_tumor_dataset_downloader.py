@@ -14,11 +14,7 @@ class BrainTumorDatasetDownloader:
 
     def prepare_dataset(self):
         print("Rozpoczęto przygotowywanie datasetu...")
-        #self.__download()
-        #self.__unzip()
-        #self.__sort_dataset()
-        #self.__remove_temps()
-        #self.__standardize_names()
+        
         if not os.path.exists(self.dataset_path):
             os.mkdir(self.dataset_path)
 

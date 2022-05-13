@@ -1,6 +1,5 @@
 from typing import Optional
 
-import hydra
 import pytorch_lightning as pl
 from pytorch_lightning.utilities.types import TRAIN_DATALOADERS, EVAL_DATALOADERS
 from torch import randperm

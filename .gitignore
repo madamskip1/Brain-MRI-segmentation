@@ -3,7 +3,7 @@ dataset/
 datasets/
 outputs/
 wandb/
-checkpoint-04-0.78.ckpt
+checkpoint*
 
 # dummy model files to ignore
 configs/data/mnist.yaml
