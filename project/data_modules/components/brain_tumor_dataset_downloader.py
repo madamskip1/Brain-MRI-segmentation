@@ -14,7 +14,7 @@ class BrainTumorDatasetDownloader:
 
     def prepare_dataset(self):
         print("Rozpoczęto przygotowywanie datasetu...")
-        
+
         if not os.path.exists(self.dataset_path):
             os.mkdir(self.dataset_path)
 
@@ -53,8 +53,7 @@ class BrainTumorDatasetDownloader:
         dataset_dirs.remove(f"data.csv")
         dataset_dirs.remove(f"README.md")
 
-        # TODO dodać tqdm
-        for subdir in dataset_dirs:
+        for subdir in tqdm(iterable=dataset_dirs, total=len(dataset_dirs)):
             files_in_subdir = os.listdir(f"{self.dataset_path}/kaggle_3m/{subdir}")
             images = list(filter(lambda file_name: "mask" not in file_name, files_in_subdir))
             masks = list(filter(lambda file_name: "mask" in file_name, files_in_subdir))
@@ -79,8 +78,7 @@ class BrainTumorDatasetDownloader:
         print("Standaryzowanie nazewnictwa zdjęć...")
         images = os.listdir(self.images_path)
 
-        # TODO dodać tqdm
-        for i, image_name in enumerate(images):
+        for i, image_name in enumerate(tqdm(iterable=images, total=len(images))):
             dot_index = image_name.rfind('.')
             mask_name = f"{self.masks_path}/{image_name[:dot_index]}_mask{image_name[dot_index:]}"
             image_name = f"{self.images_path}/{image_name}"
