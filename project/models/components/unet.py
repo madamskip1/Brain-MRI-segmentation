@@ -20,10 +20,10 @@ class UNet(nn.Module):
         self.conv_block_l_3 = UNet.__conv_block(layer_out_channels * 2, layer_out_channels * 4, 3)
         self.conv_block_l_4 = UNet.__conv_block(layer_out_channels * 4, layer_out_channels * 8, 3)
 
-        self.maxpool1 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.maxpool3 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.maxpool4 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.max_pool_1 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.max_pool_2 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.max_pool_3 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.max_pool_4 = nn.MaxPool2d(kernel_size=2, stride=2)
 
         contracting_block_out_channels = layer_out_channels * 8
 
@@ -48,19 +48,19 @@ class UNet(nn.Module):
         # Contracting path
         x = self.conv_block_l_1(x)
         encoded1 = torch.clone(x)
-        x = self.maxpool1(x)
+        x = self.max_pool_1(x)
 
         x = self.conv_block_l_2(x)
         encoded2 = torch.clone(x)
-        x = self.maxpool2(x)
+        x = self.max_pool_2(x)
 
         x = self.conv_block_l_3(x)
         encoded3 = torch.clone(x)
-        x = self.maxpool3(x)
+        x = self.max_pool_3(x)
 
         x = self.conv_block_l_4(x)
         encoded4 = torch.clone(x)
-        x = self.maxpool4(x)
+        x = self.max_pool_4(x)
 
         # Middle
         x = self.conv_block_mid(x)

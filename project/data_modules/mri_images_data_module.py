@@ -2,8 +2,7 @@ from typing import Optional
 
 import pytorch_lightning as pl
 from pytorch_lightning.utilities.types import TRAIN_DATALOADERS, EVAL_DATALOADERS
-from torch import randperm
-from torch.utils.data import DataLoader, random_split, Subset
+from torch.utils.data import DataLoader, random_split
 
 
 class MRIImagesDataModule(pl.LightningDataModule):
@@ -23,8 +22,6 @@ class MRIImagesDataModule(pl.LightningDataModule):
         self.dataset_downloader.prepare_dataset()
 
     def setup(self, stage: Optional[str] = None) -> None:
-        # indices = randperm(len(dataset))[:100]
-        # dataset_small = Subset(dataset, indices)
         train_size = int(len(self.dataset) * self.train_test_ratio)
         test_size = len(self.dataset) - train_size
         self.train_dataset, self.test_dataset = random_split(self.dataset, [train_size, test_size])
