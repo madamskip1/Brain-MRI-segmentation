@@ -23,7 +23,7 @@ in_channels: 3
 defaults:
   - data: mri.yaml
   - model: segmentation_module.yaml
-  - callbacks: default.yaml
+  - callbacks: default_colab.yaml
   - segmentation_module_model: unet.yaml
   - _self_
 
