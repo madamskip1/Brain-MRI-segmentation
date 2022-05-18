@@ -28,7 +28,7 @@ class BrainTumorDatasetDownloader:
             print("Rozpoczęto przygotowywanie datasetu...")
             self.__download()
             self.__unzip()
-            self.__remove_damaged_images
+            self.__remove_damaged_images()
             self.__sort_dataset()
             self.__remove_temps()
             self.__standardize_names()
