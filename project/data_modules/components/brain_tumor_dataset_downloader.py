@@ -1,6 +1,8 @@
 import os
 import shutil
 import zipfile
+import json
+
 
 import kaggle
 from tqdm import tqdm
@@ -26,6 +28,7 @@ class BrainTumorDatasetDownloader:
             print("Rozpoczęto przygotowywanie datasetu...")
             self.__download()
             self.__unzip()
+            self.__remove_damaged_images
             self.__sort_dataset()
             self.__remove_temps()
             self.__standardize_names()
@@ -46,6 +49,22 @@ class BrainTumorDatasetDownloader:
             for file in tqdm(iterable=zip_ref.namelist(), total=len(zip_ref.namelist())):
                 zip_ref.extract(member=file, path=self.dataset_path)
         print("Rozpakowano...")
+
+    def __remove_damaged_images(self):
+        print("Usuwanie uszkodzonych zdjęć")
+
+        images_to_delete_file = open("images_to_delete.json")
+        images_to_delete_json = json.load(images_to_delete_file)
+
+        for images_dir in images_to_delete_json:
+            dir = images_dir["dir"]
+            for image_index in images_dir["files_index"]:
+                image_path = dir + "/" + dir + "_" + str(image_index) + ".tif"
+                mask_path = dir + "/" + dir + "_" + str(image_index) + "_mask.tif"
+                os.remove(f"{image_path}")
+                os.remove(f"{mask_path}")
+
+        print("Usunięto...")
 
     def __sort_dataset(self):
         print("Sortowanie...")

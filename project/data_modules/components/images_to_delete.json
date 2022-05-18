@@ -1,0 +1,450 @@
+[
+    {
+        "dir": "TCGA_CS_4941_19960909",
+        "files_index": [ 1, 23 ]
+    },
+    {
+        "dir": "TCGA_CS_4942_19970222",
+        "files_index": [ 1, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_4943_20000902",
+        "files_index": [ 1, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_4944_20010208",
+        "files_index": [ 1, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_5393_19990606",
+        "files_index": [ 1, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_5395_19981004",
+        "files_index": [ 1, 19, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_5396_20010302",
+        "files_index": [ 1, 2, 3 ]
+    },
+    {
+        "dir": "TCGA_CS_5397_20010315",
+        "files_index": [ 1, 22 ]
+    },
+    {
+        "dir": "TCGA_CS_6186_20000601",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_CS_6188_20010812",
+        "files_index": [ 22, 23, 24 ]
+    },
+    {
+        "dir": "TCGA_CS_6290_20000917",
+        "files_index": [ 1 ]
+    },
+    {
+        "dir": "TCGA_CS_6665_20010817",
+        "files_index": [ 1, 24 ]
+    },
+    {
+        "dir": "TCGA_CS_6666_20011109",
+        "files_index": [ 1 ]
+    },
+    {
+        "dir": "TCGA_CS_6667_20011105",
+        "files_index": [ 1, 20 ]
+    },
+    {
+        "dir": "TCGA_CS_6668_20011025",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_CS_6669_20020102",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_DU_5849_19950405",
+        "files_index": [ 1, 38 ]
+    },
+    {
+        "dir": "TCGA_DU_5851_19950428",
+        "files_index": [ 1, 36, 37, 38, 39, 40 ]
+    },
+    {
+        "dir": "TCGA_DU_5852_19950709",
+        "files_index": [ 1, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_5853_19950823",
+        "files_index": [ 1, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_5854_19951104",
+        "files_index": [ 1, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_5855_19951217",
+        "files_index": [ 1, 26 ]
+    },
+    {
+        "dir": "TCGA_DU_5871_19941206",
+        "files_index": [ 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_5872_19950223",
+        "files_index": [ 1, 2, 68, 69, 70, 71 ]
+    },
+    {
+        "dir": "TCGA_DU_5874_19950510",
+        "files_index": [ 1, 36, 37, 38 ]
+    },
+    {
+        "dir": "TCGA_DU_6399_19830416",
+        "files_index": [ 1, 52, 53 ]
+    },
+    {
+        "dir": "TCGA_DU_6400_19830518",
+        "files_index": [ 1, 2, 57 ]
+    },
+    {
+        "dir": "TCGA_DU_6401_19831001",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_DU_6404_19850629",
+        "files_index": [ 1, 52, 53 ]
+    },
+    {
+        "dir": "TCGA_DU_6405_19851005",
+        "files_index": [ 1, 57, 58, 59, 60 ]
+    },
+    {
+        "dir": "TCGA_DU_6407_19860514",
+        "files_index": [ 1, 58 ]
+    },
+    {
+        "dir": "TCGA_DU_6408_19860521",
+        "files_index": [ 1, 53, 54, 55, 56 ]
+    },
+    {
+        "dir": "TCGA_DU_7008_19830723",
+        "files_index": [ 1, 52 ]
+    },
+    {
+        "dir": "TCGA_DU_7010_19860307",
+        "files_index": [ 1, 57, 58]
+    },
+    {
+        "dir": "TCGA_DU_7013_19860523",
+        "files_index": [ ]
+    },
+    {
+        "dir": "TCGA_DU_7014_19860618",
+        "files_index": [ 1, 59, 60 ]
+    },
+    {
+        "dir": "TCGA_DU_7018_19911220",
+        "files_index": [ 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_7019_19940908",
+        "files_index": [ 35, 36, 37, 38 ]
+    },
+    {
+        "dir": "TCGA_DU_7294_19890104",
+        "files_index": [ 1, 33, 34 ]
+    },
+    {
+        "dir": "TCGA_DU_7298_19910324",
+        "files_index": [ 32 ]
+    },
+    {
+        "dir": "TCGA_DU_7299_19910417",
+        "files_index": [ 1, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_7300_19910814",
+        "files_index": [ 1, 32, 33, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_7301_19911112",
+        "files_index": [ 34, 35 ]
+    },
+    {
+        "dir": "TCGA_DU_7302_19911203",
+        "files_index": [ 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_7304_19930325",
+        "files_index": [ 1, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_7306_19930512",
+        "files_index": [ 39, 40, 41, 42 ]
+    },
+    {
+        "dir": "TCGA_DU_7309_19960831",
+        "files_index": [ 36, 37, 38, 39, 40 ]
+    },
+    {
+        "dir": "TCGA_DU_8162_19961029",
+        "files_index": [ 1, 35, 36, 37 ]
+    },
+    {
+        "dir": "TCGA_DU_8163_19961119",
+        "files_index": [ 1, 35, 36, 37 ]
+    },
+    {
+        "dir": "TCGA_DU_8164_19970111",
+        "files_index": [ 1, 34, 35, 36, 37 ]
+    },
+    {
+        "dir": "TCGA_DU_8165_19970205",
+        "files_index": [ 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_8166_19970322",
+        "files_index": [ 33, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_8167_19970402",
+        "files_index": [ 36, 37 ]
+    },
+    {
+        "dir": "TCGA_DU_8168_19970503",
+        "files_index": [ 1, 33, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_DU_A5TP_19970614",
+        "files_index": [ 1, 37, 38 ]
+    },
+    {
+        "dir": "TCGA_DU_A5TR_19970726",
+        "files_index": [ 1, 2, 37, 38 ]
+    },
+    {
+        "dir": "TCGA_DU_A5TS_19970726",
+        "files_index": [ 1, 33, 34, 35 ]
+    },
+    {
+        "dir": "TCGA_DU_A5TT_19980318",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_DU_A5TU_19980312",
+        "files_index": [ 1, 2, 22, 23 ]
+    },
+    {
+        "dir": "TCGA_DU_A5TW_19980228",
+        "files_index": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 31]
+    },
+    {
+        "dir": "TCGA_DU_A5TY_19970709",
+        "files_index": [ 33, 34, 35, 36 ]
+    },
+    {
+        "dir": "TCGA_EZ_7264_20010816",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_FG_5962_20000626",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_FG_5964_20010511",
+        "files_index": [ 26 ]
+    },
+    {
+        "dir": "TCGA_FG_6688_20020215",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_FG_6689_20020326",
+        "files_index": [ 47, 48 ]
+    },
+    {
+        "dir": "TCGA_FG_6690_20020226",
+        "files_index": [ 57 , 58, 59, 60 ]
+    },
+    {
+        "dir": "TCGA_FG_6691_20020405",
+        "files_index": [ 1, 2, 3, 46, 47, 48 ]
+    },
+    {
+        "dir": "TCGA_FG_6692_20020606",
+        "files_index": [ 1, 2, 3, 24, 25, 26 ]
+    },
+    {
+        "dir": "TCGA_FG_7634_20000128",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_FG_7637_20000922",
+        "files_index": [ 1, 51 ]
+    },
+    {
+        "dir": "TCGA_FG_7643_20021104",
+        "files_index": [ 1, 2, 3, 4, 41, 42, 43, 44, 45, 46, 47, 48 ]
+    },
+    {
+        "dir": "TCGA_FG_8189_20030516",
+        "files_index": [ 1, 54, 55, 56, 57, 58, 59, 60 ]
+    },
+    {
+        "dir": "TCGA_FG_A4MT_20020212",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_FG_A4MU_20030903",
+        "files_index": [ 36 ]
+    },
+    {
+        "dir": "TCGA_FG_A60K_20040224",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7473_19970826",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7475_19970918",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7602_19951103",
+        "files_index": [ 1, 2, 20 ]
+    },
+    {
+        "dir": "TCGA_HT_7605_19950916",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7608_19940304",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7616_19940813",
+        "files_index": [ 1 ]
+    },
+    {
+        "dir": "TCGA_HT_7680_19970202",
+        "files_index": [  ]
+    },
+    {
+        "dir": "TCGA_HT_7684_19950816",
+        "files_index": [ 1, 2, 3, 4 ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7686_19950629",
+        "files_index": [ 1, 2, 3, 19, 20 ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7690_19960312",
+        "files_index": [ 1, 2, 23, 24 ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7692_19960724",
+        "files_index": [  ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7693_19950520",
+        "files_index": [  ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7694_19950404",
+        "files_index": [ 1, 21 ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7855_19951020",
+        "files_index": [ 1, 21 ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7856_19950831",
+        "files_index": [  ]
+        
+    },
+    {
+        "dir": "TCGA_HT_7860_19960513",
+        "files_index": [ 1, 2 ] 
+    },
+    {
+        "dir": "TCGA_HT_7874_19950902",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_7877_19980917",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_7879_19981009",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_7881_19981015",
+        "files_index": [ 80 ] 
+    },
+    {
+        "dir": "TCGA_HT_7882_19970125",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_7884_19980913",
+        "files_index": [ 1 ] 
+    },
+    {
+        "dir": "TCGA_HT_8018_19970411",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_8105_19980826",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_8106_19970727",
+        "files_index": [ 1, 22 ] 
+    },
+    {
+        "dir": "TCGA_HT_8107_19980708",
+        "files_index": [ 1, 20 ] 
+    },
+    {
+        "dir": "TCGA_HT_8111_19980330",
+        "files_index": [ 1, 2, 22 ] 
+    },
+    {
+        "dir": "TCGA_HT_8113_19930809",
+        "files_index": [ 1 ] 
+    },
+    {
+        "dir": "TCGA_HT_8114_19981030",
+        "files_index": [ 1 ] 
+    },
+    {
+        "dir": "TCGA_HT_8563_19981209",
+        "files_index": [ 1, 23 ] 
+    },
+    {
+        "dir": "TCGA_HT_A5RC_19990831",
+        "files_index": [  ] 
+    },
+    {
+        "dir": "TCGA_HT_A61A_20000127",
+        "files_index": [ 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88 ] 
+    },
+    {
+        "dir": "TCGA_HT_A61B_19991127",
+        "files_index": [ 80, 81, 82, 83, 84, 85, 86, 87, 88 ] 
+    },
+    {
+        "dir": "TCGA_HT_A616_19991226",
+        "files_index": [  ] 
+    }
+]
