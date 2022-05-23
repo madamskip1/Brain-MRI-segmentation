@@ -9,10 +9,11 @@ from tqdm import tqdm
 
 
 class BrainTumorDatasetDownloader:
-    def __init__(self, dataset_path, images_path, masks_path, **kwargs):
+    def __init__(self, dataset_path, images_path, masks_path, images_to_delete_json_path, **kwargs):
         self.dataset_path = dataset_path
         self.images_path = images_path
         self.masks_path = masks_path
+        self.images_to_delete_json_path = images_to_delete_json_path
 
     def prepare_dataset(self):
         print("Rozpoczęto przygotowywanie datasetu...")
@@ -53,14 +54,14 @@ class BrainTumorDatasetDownloader:
     def __remove_damaged_images(self):
         print("Usuwanie uszkodzonych zdjęć")
 
-        images_to_delete_file = open("images_to_delete.json")
+        images_to_delete_file = open(f"{self.images_to_delete_json_path}")
         images_to_delete_json = json.load(images_to_delete_file)
 
         for images_dir in images_to_delete_json:
             dir = images_dir["dir"]
             for image_index in images_dir["files_index"]:
-                image_path = dir + "/" + dir + "_" + str(image_index) + ".tif"
-                mask_path = dir + "/" + dir + "_" + str(image_index) + "_mask.tif"
+                image_path = f"{self.dataset_path}/kaggle_3m/{dir}/{dir}_{image_index}.tif"
+                mask_path = f"{self.dataset_path}/kaggle_3m/{dir}/{dir}_{image_index}_mask.tif"
                 os.remove(f"{image_path}")
                 os.remove(f"{mask_path}")
 
