@@ -1,0 +1,35 @@
+name: mri
+
+_target_: project.data_modules.mri_images_data_module.MRIImagesDataModule
+# The paths are defined in configs/defaults.yaml
+dataset_path: "${dataset_path}"
+images_path: "${images_path}"
+masks_path: "${masks_path}"
+
+dataset:
+  _target_: project.data_modules.components.brain_tumor_dataset.BrainTumorDataset
+  images_path: "${images_path}"
+  masks_path: "${masks_path}"
+  mask_mean: 0.0102
+  mask_std: 0.1005
+  image_mean:
+    - 0.0913
+    - 0.0828
+    - 0.0869
+  image_std:
+    - 0.1349
+    - 0.1234
+    - 0.1288
+  image_channel: ${image_channel}
+
+dataset_downloader:
+  _target_: project.data_modules.components.brain_tumor_dataset_downloader.BrainTumorDatasetDownloader
+  dataset_path: "${dataset_path}"
+  images_path: "${images_path}"
+  masks_path: "${masks_path}"
+  images_to_delete_json_path: "${original_work_dir}/project/data_modules/components/images_to_delete.json"
+
+batch_size: 10
+train_test_ratio: 0.9
+val_size: 0.1
+num_workers: 4
