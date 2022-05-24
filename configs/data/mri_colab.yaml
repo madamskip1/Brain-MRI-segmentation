@@ -27,7 +27,7 @@ dataset_downloader:
   dataset_path: "${dataset_path}"
   images_path: "${images_path}"
   masks_path: "${masks_path}"
-  images_to_delete_json_path: "${original_work_dir}/project/data_modules/components/images_to_delete.json"
+  images_to_delete_json_path: "project/data_modules/components/images_to_delete.json"
 
 batch_size: 10
 train_test_ratio: 0.9
